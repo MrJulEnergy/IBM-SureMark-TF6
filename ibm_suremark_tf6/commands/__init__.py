@@ -1,1 +1,2 @@
 from .system_commands import exercise_program, status_request
+from .onetime_set_commands import download_graphics

@@ -17,7 +17,6 @@ def status_request(printer: Printer) -> list:
         for i in range(len(msg)):
             if i == 5:
                # line count
-               assert int(msg[i], 2) == 5
                continue
             if i == 3:
                 # TODO Contains the printer engineering code (EC) level with all status messages.
@@ -37,3 +36,13 @@ def status_request(printer: Printer) -> list:
         return report
 
 
+def extended_addres_command_request(printer: Printer):
+    # TODO
+    # Does the same as status_request() but sends 5 additional bits
+    # Manal Page 112
+    pass
+
+def verify_previous_commands(printer: Printer):
+    # TODO
+    # Don't know yet how this works (Manual Page 111)
+    pass
