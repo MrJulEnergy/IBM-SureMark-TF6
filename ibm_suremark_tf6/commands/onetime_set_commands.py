@@ -4,6 +4,7 @@ from ibm_suremark_tf6.base import Printer
 import time
 
 def download_graphics(printer: Printer, filepath: str, logo_number: int):
+    # TODO: Dont erase the EEPROM if logo_number is free
     assert logo_number <= 40
     def bmp_to_bytes(filepath):
         img = Image.open(filepath)
@@ -25,9 +26,8 @@ def download_graphics(printer: Printer, filepath: str, logo_number: int):
         
         return data, width, height
     data, width, height = bmp_to_bytes(filepath)
-
+    
     with serial.Serial(printer.port, printer.baudrate, timeout=printer.timeout) as ser:
         ser.write(b"\x1B\x23\x01") # Clear sector
-        time.sleep(1)
+        time.sleep(1) # TODO Check if EEPROM is erased
         ser.write(b"\x1D\x2A"+logo_number.to_bytes()+int(width/8).to_bytes()+int(height/8).to_bytes()+data) # load data
-        #print((b"\x1D\x2A"+logo_number.to_bytes()+int(width/8).to_bytes()+int(height/8).to_bytes()).hex("-"))
